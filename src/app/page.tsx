@@ -1,7 +1,8 @@
 import styles from "./page.module.css";
 
-const APK_URL = process.env.NEXT_PUBLIC_APK_URL ?? "/app-release.apk";
-const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION ?? "1.0.0";
+const GUIDE_APK_URL = process.env.NEXT_PUBLIC_GUIDE_APK_URL ?? process.env.NEXT_PUBLIC_APK_URL ?? "https://github.com/vraiuk/wifi-tour-guide-landing/releases/download/v1.3.1/tourfi-guide.apk";
+const TOURIST_APK_URL = process.env.NEXT_PUBLIC_TOURIST_APK_URL ?? "https://github.com/vraiuk/wifi-tour-guide-landing/releases/download/v1.3.1/tourfi-listener.apk";
+const APP_VERSION = process.env.NEXT_PUBLIC_APP_VERSION ?? "1.3.1";
 
 const features = [
   {
@@ -20,17 +21,17 @@ const features = [
     desc: "Один гид транслирует аудио для всей группы одновременно",
   },
   {
-    icon: "🔗",
-    title: "QR-код подключения",
-    desc: "Туристы сканируют QR — и сразу в комнате гида, без регистрации",
+    icon: "📱",
+    title: "Два отдельных приложения",
+    desc: "Лёгкое приложение для туристов, полнофункциональное для гидов",
   },
 ];
 
 const installSteps = [
   {
     num: "1",
-    title: 'Скачайте APK',
-    desc: 'Нажмите кнопку "Скачать APK" выше и дождитесь загрузки файла',
+    title: 'Скачайте нужное приложение',
+    desc: 'Гид скачивает "TourFi Гид", туристы — "TourFi"',
   },
   {
     num: "2",
@@ -39,18 +40,14 @@ const installSteps = [
   },
   {
     num: "3",
-    title: "Установите приложение",
-    desc: 'Вернитесь назад и нажмите "Установить". После установки — открыть TourFi',
-  },
-  {
-    num: "4",
-    title: "Выберите роль",
-    desc: "Гид — для управления трансляцией. Турист — для прослушивания",
+    title: "Установите и откройте",
+    desc: 'Нажмите "Установить". Гид включает точку доступа и начинает эфир. Туристы подключаются к WiFi гида',
   },
 ];
 
 export default function HomePage() {
-  const isLocalApk = APK_URL.startsWith("/");
+  const isLocalGuide = GUIDE_APK_URL.startsWith("/");
+  const isLocalTourist = TOURIST_APK_URL.startsWith("/");
 
   return (
     <main className={styles.main}>
@@ -71,8 +68,8 @@ export default function HomePage() {
 
           <div className={styles.actions}>
             <a
-              href={APK_URL}
-              download={isLocalApk ? "tourfi.apk" : undefined}
+              href={GUIDE_APK_URL}
+              download={isLocalGuide ? "tourfi-guide.apk" : undefined}
               className={styles.downloadBtn}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -84,14 +81,50 @@ export default function HomePage() {
                   strokeLinejoin="round"
                 />
               </svg>
-              Скачать APK
+              Для гида
             </a>
-            <span className={styles.platformNote}>
-              Android 8.0+
-            </span>
+            <a
+              href={TOURIST_APK_URL}
+              download={isLocalTourist ? "tourfi-listener.apk" : undefined}
+              className={styles.downloadBtn}
+              style={{ background: 'rgba(255,255,255,0.15)', border: '2px solid rgba(255,255,255,0.5)' }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M12 16L7 11M12 16L17 11M12 16V4M6 20H18"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              Для туриста
+            </a>
           </div>
+          <span className={styles.platformNote}>
+            Android 8.0+
+          </span>
 
           <div className={styles.heroGlow} aria-hidden="true" />
+        </div>
+      </section>
+
+      {/* Which app */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Какое приложение скачать?</h2>
+          <div className={styles.featuresGrid}>
+            <div className={styles.featureCard}>
+              <span className={styles.featureIcon}>🎙️</span>
+              <h3 className={styles.featureTitle}>TourFi Гид</h3>
+              <p className={styles.featureDesc}>Вы ведёте экскурсию. Приложение создаёт точку доступа и транслирует ваш голос группе.</p>
+            </div>
+            <div className={styles.featureCard}>
+              <span className={styles.featureIcon}>🎧</span>
+              <h3 className={styles.featureTitle}>TourFi (Туристам)</h3>
+              <p className={styles.featureDesc}>Вы слушаете экскурсию. Лёгкое приложение — подключается автоматически, просто слушайте.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -134,8 +167,7 @@ export default function HomePage() {
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
               <path d="M12 8v4M12 16h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-            Если Android заблокировал установку — перейдите в{" "}
-            <strong>Настройки → Безопасность → Неизвестные источники</strong> и включите разрешение.
+            <strong>Важно:</strong> выключите VPN и блокировщики рекламы перед использованием — они блокируют локальную сеть.
           </div>
         </div>
       </section>
@@ -147,22 +179,23 @@ export default function HomePage() {
           <p className={styles.ctaDesc}>
             Скачайте приложение и проведите первую экскурсию уже сегодня
           </p>
-          <a
-            href={APK_URL}
-            download={isLocalApk ? "tourfi.apk" : undefined}
-            className={styles.downloadBtn}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M12 16L7 11M12 16L17 11M12 16V4M6 20H18"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Скачать TourFi APK
-          </a>
+          <div className={styles.actions}>
+            <a
+              href={GUIDE_APK_URL}
+              download={isLocalGuide ? "tourfi-guide.apk" : undefined}
+              className={styles.downloadBtn}
+            >
+              Скачать для гида
+            </a>
+            <a
+              href={TOURIST_APK_URL}
+              download={isLocalTourist ? "tourfi-listener.apk" : undefined}
+              className={styles.downloadBtn}
+              style={{ background: 'rgba(255,255,255,0.15)', border: '2px solid rgba(255,255,255,0.5)' }}
+            >
+              Скачать для туриста
+            </a>
+          </div>
         </div>
       </section>
 
