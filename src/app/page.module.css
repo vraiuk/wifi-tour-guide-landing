@@ -54,6 +54,16 @@
   color: var(--text);
 }
 
+.titleHook {
+  font-size: clamp(32px, 5.5vw, 52px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  color: var(--text);
+  max-width: 720px;
+}
+
 .titleAccent {
   color: var(--brand);
 }
@@ -106,6 +116,28 @@
 
 .downloadBtn:active {
   transform: translateY(0);
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  background: transparent;
+  color: var(--text);
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.secondaryBtn:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+  text-decoration: none;
 }
 
 .platformNote {
@@ -176,6 +208,150 @@
   font-size: 14px;
   color: var(--text-muted);
   line-height: 1.6;
+}
+
+/* ── Compare table ── */
+.compareTable {
+  margin-top: 40px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.compareHead,
+.compareRow {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 0;
+}
+
+.compareHead {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.compareHeadCol,
+.compareHeadColAccent {
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.compareHeadCol {
+  color: var(--text-muted);
+  border-left: 1px solid var(--border);
+}
+
+.compareHeadColAccent {
+  color: var(--brand);
+  border-left: 1px solid var(--border);
+  background: rgba(10, 132, 255, 0.08);
+}
+
+.compareRow {
+  border-bottom: 1px solid var(--border);
+}
+
+.compareRow:last-child {
+  border-bottom: none;
+}
+
+.compareLabel {
+  padding: 18px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.compareCellMuted,
+.compareCellAccent {
+  padding: 18px 20px;
+  font-size: 15px;
+  line-height: 1.5;
+  border-left: 1px solid var(--border);
+}
+
+.compareCellMuted {
+  color: var(--text-muted);
+}
+
+.compareCellAccent {
+  color: var(--text);
+  font-weight: 600;
+  background: rgba(10, 132, 255, 0.04);
+}
+
+.economyNote {
+  margin-top: 24px;
+  padding: 18px 22px;
+  background: rgba(10, 132, 255, 0.08);
+  border: 1px solid rgba(10, 132, 255, 0.2);
+  border-radius: var(--radius);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.economyNote strong {
+  color: var(--brand);
+}
+
+/* ── FAQ ── */
+.faq {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faqItem {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  transition: border-color 0.2s;
+}
+
+.faqItem[open] {
+  border-color: rgba(10, 132, 255, 0.4);
+}
+
+.faqQ {
+  padding: 18px 22px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  padding-right: 48px;
+}
+
+.faqQ::-webkit-details-marker {
+  display: none;
+}
+
+.faqQ::after {
+  content: "+";
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: var(--brand);
+  font-weight: 400;
+  transition: transform 0.2s;
+}
+
+.faqItem[open] .faqQ::after {
+  content: "−";
+}
+
+.faqA {
+  padding: 0 22px 20px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-muted);
 }
 
 /* ── Install steps ── */
@@ -290,9 +466,46 @@
 }
 
 /* ── Mobile ── */
+@media (max-width: 720px) {
+  .compareHead,
+  .compareRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .compareLabel {
+    grid-column: 1 / -1;
+    padding-bottom: 4px;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .compareHead {
+    display: none;
+  }
+
+  .compareCellMuted,
+  .compareCellAccent {
+    border-left: none;
+  }
+
+  .compareCellMuted {
+    border-right: 1px solid var(--border);
+  }
+
+  .compareRow {
+    padding: 8px 0 12px;
+  }
+}
+
 @media (max-width: 480px) {
   .hero {
     padding: 72px 20px 80px;
+  }
+
+  .titleHook {
+    font-size: 30px;
   }
 
   .featuresGrid {
