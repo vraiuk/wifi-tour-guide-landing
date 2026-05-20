@@ -1,8 +1,8 @@
 import styles from "./page.module.css";
 
-const GUIDE_APK_URL = "https://github.com/vraiuk/wifi-tour-guide-landing/releases/download/v1.5.1/tourfi-guide.apk";
-const TOURIST_APK_URL = "https://github.com/vraiuk/wifi-tour-guide-landing/releases/download/v1.5.1/tourfi-listener.apk";
-const APP_VERSION = "1.5.1";
+const GUIDE_APK_URL = "https://github.com/vraiuk/wifi-tour-guide-landing/releases/download/v1.5.2/tourfi-guide.apk";
+const TOURIST_APK_URL = "https://github.com/vraiuk/wifi-tour-guide-landing/releases/download/v1.5.2/tourfi-listener.apk";
+const APP_VERSION = "1.5.2";
 const CONTACT_TG = "https://t.me/vraiuk";
 
 const economy = [
